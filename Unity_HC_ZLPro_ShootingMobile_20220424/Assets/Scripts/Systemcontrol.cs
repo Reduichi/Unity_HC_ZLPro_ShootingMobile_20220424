@@ -19,8 +19,11 @@ namespace RED
         private float rangeDirectionicon = 2.5f;
         [SerializeField, Header("角色旋轉速度"), Range(0, 100)]
         private float speedturn = 1.5f;
+        [SerializeField, Header("動畫參數跑步")]
+        private string parameterWalk = "開關跑步";
 
         private Rigidbody rig;
+        private Animator ani;
 
 		private void Awake()
 		{
@@ -32,6 +35,7 @@ namespace RED
             // GetJoystickValue();
             UpdateDirectionIconPos();
             LookDirectionIcon();
+            UpdateAnimation();
 
         }
 
@@ -79,6 +83,15 @@ namespace RED
             transform.rotation = Quaternion.Lerp(transform.rotation, look, speedturn * Time.deltaTime);
             // 角色的歐拉角度 = 三維向量(0，原本的歐拉角度Y，0)
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
+
+        /// <summary>
+        /// 更新動畫
+        /// </summary>
+        private void UpdateAnimation()
+        {
+            bool run = joystick.Horizontal != 0 || joystick.Vertical != 0;
+            ani.SetBool(parameterWalk, run);
         }
     }
 
