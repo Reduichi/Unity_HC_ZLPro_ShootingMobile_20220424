@@ -117,7 +117,7 @@ namespace RED
 #if UNITY_IOS
             adsId = adsIdIos;
 #elif UNITY_ANDROID
-            adsId = adsAndroid;
+            adsId = adsIdAndroid;
 #endif
             // PC ºÝ´ú¸Õ
             adsId = adsIdAndroid;
