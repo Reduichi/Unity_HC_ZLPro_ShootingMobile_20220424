@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Collections;
+using TMPro;
 
 namespace RED
 {
@@ -11,11 +12,12 @@ namespace RED
     public class DataManager : MonoBehaviour
     {
         // 新增部署作業內的網址，有變更 GAS 都要更新
-        private string gasLink = "https://script.google.com/macros/s/AKfycbyergUCj2ViPJmUMDHz7MP6WhBHEHepDBh5AWNQv-zVu7568CpkF6x1_JMJkLtFHMNR/exec";
+        private string gasLink = "https://script.google.com/macros/s/AKfycbyaRySi6O1wT4wTdrLPw6eyfVs3Id8tRCsuGglzm--1Is0TTr3vJ-Fc_DSHiR4rQHoh/exec";
         private WWWForm form;
 
         private Button btnGetData;
         private Text textPlayerName;
+        private TMP_Inputfield inputField;
 
 
         private void Start()
@@ -23,6 +25,9 @@ namespace RED
             textPlayerName = GameObject.Find("玩家名稱").GetComponent<Text>();
             btnGetData = GameObject.Find("取得玩家資料按鈕").GetComponent<Button>();
             btnGetData.onClick.AddListener(GetGASData);
+
+            inputField = GameObject.Find("更新玩家名稱").GetComponent<TMP_Inputfield>();
+            inputField.onEndEdit.AddListener(SetGASData);
         }
 
         /// <summary>
@@ -49,6 +54,30 @@ namespace RED
             }
         }
 
+        private void SetGASData(string value)
+        {
+            form = new WWWForm();
+            form.AddField("method", "設定");
+            form.AddField("playerName", inputField.text);
+
+            StartCoroutine(StartSetGASData());
+        }
+
+        private IEnumerator StartSetGASData()
+        {
+            using (UnityWebRequest www = UnityWebRequest.Post(gasLink, form))
+            {
+                yield return www.SendWebRequest();
+                textPlayerName.text = inputField.text;
+                print(www.downloadHandler.text);
+            }
+        }
+
+    }
+
+    internal class TMP_Inputfield
+    {
+        internal readonly object onEndEdit;
     }
 }
 
