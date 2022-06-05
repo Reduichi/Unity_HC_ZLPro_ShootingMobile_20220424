@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
 using UnityEngine.UI;
+using TMPro;
 
 // namespace 命名空間
 namespace RED
@@ -58,7 +59,7 @@ namespace RED
                 cvc.Follow = transform;                                                                             // 指定追蹤物件
 
                 damageManager.imgHp = GameObject.Find("圖片血量").GetComponent<Image>();
-                damageManager.textHp = GameObject.Find("文字血量").GetComponent<Text>();
+                damageManager.textHp = GameObject.Find("文字血量").GetComponent<TextMeshProUGUI>();
             }
             // 否則 不是進入的玩家 就關閉控制系統，避免控制到多個物件
             else
@@ -114,6 +115,9 @@ namespace RED
         /// </summary>
         private void LookDirectionIcon()
         {
+            // 如果 垂直絕對值 小於 0.1 並且 水平絕對值 小於 0.1 就 不處理面向
+            if (Mathf.Abs(joystick.Vertical) < 0.1f && Mathf.Abs(joystick.Horizontal) < 0.1f) return;
+
             // 取得面向角度 = 四位元.面向角度(方向圖示 - 角色) - 方向圖示與角色的向量
             Quaternion look = Quaternion.LookRotation(traDirectionicon.position - transform.position);
             // 角色的角度 = 四位元.插值(角色的角度，面向角度，旋轉速度 * 一偵的時間)
