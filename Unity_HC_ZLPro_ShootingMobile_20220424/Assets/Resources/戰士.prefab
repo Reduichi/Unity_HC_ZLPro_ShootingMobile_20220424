@@ -1658,6 +1658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 200
   goVFXHit: {fileID: 5560641405242000892, guid: 5d6070ae25311794482654c7222f7846, type: 3}
+  shaderDissolve: {fileID: -6465566751694194690, guid: bf8f24107d6699e4c988cea0876d52e3, type: 3}
   imgHp: {fileID: 0}
   textHp: {fileID: 0}
 --- !u!1 &5302855230510897071

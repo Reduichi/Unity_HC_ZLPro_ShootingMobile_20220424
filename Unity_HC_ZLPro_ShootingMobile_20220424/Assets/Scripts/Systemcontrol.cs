@@ -31,10 +31,11 @@ namespace RED
         private Rigidbody rig;
         private Animator ani;
         private Joystick joystick;
-        private Transform traDirectionicon;
         private CinemachineVirtualCamera cvc;
         private SystemAttack systemAttack;
         private DamageManager damageManager;
+
+        public Transform traDirectionIcon;
 
         private void Awake()
 		{
