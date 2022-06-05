@@ -37,7 +37,7 @@ namespace RED
 
         public Transform traDirectionIcon;
 
-        private void Awake()
+        private void Awake(Transform traDirectionicon)
 		{
             rig = GetComponent<Rigidbody>();
             ani = GetComponent<Animator>();
@@ -107,8 +107,9 @@ namespace RED
         {
             // 新座標 = 角色的座標 + 三維向量(虛擬搖桿的水平與垂直) * 方向圖示的範圍
             Vector3 pos = transform.position + new Vector3(-joystick.Horizontal, 0.5f, -joystick.Vertical) * rangeDirectionicon;
+            object traDirectionicon = null;
             // 更新方向圖示的座標 = 新座標
-            traDirectionicon.position = pos;
+            traDirectionIcon.position = pos;
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace RED
             if (Mathf.Abs(joystick.Vertical) < 0.1f && Mathf.Abs(joystick.Horizontal) < 0.1f) return;
 
             // 取得面向角度 = 四位元.面向角度(方向圖示 - 角色) - 方向圖示與角色的向量
-            Quaternion look = Quaternion.LookRotation(traDirectionicon.position - transform.position);
+            Quaternion look = Quaternion.LookRotation(traDirectionIcon.position - transform.position);
             // 角色的角度 = 四位元.插值(角色的角度，面向角度，旋轉速度 * 一偵的時間)
             transform.rotation = Quaternion.Lerp(transform.rotation, look, speedturn * Time.deltaTime);
             // 角色的歐拉角度 = 三維向量(0，原本的歐拉角度Y，0)
